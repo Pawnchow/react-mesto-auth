@@ -1,0 +1,17 @@
+.photo__remove {
+    background: url(../../../images/Trash.svg) no-repeat center / cover;
+    width: 18px;
+    height: 19px;
+    border: none;
+    transition: .2s;
+    padding: 0;
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.photo__remove:hover {
+    opacity: .6;
+    cursor: pointer;
+}

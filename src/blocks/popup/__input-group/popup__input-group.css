@@ -1,0 +1,7 @@
+.popup__input-group {
+    margin-bottom: 13px;
+}
+
+.popup__input-group:last-of-type {
+    margin: 0;
+}

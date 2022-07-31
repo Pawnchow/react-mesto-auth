@@ -1,0 +1,13 @@
+.header__menu {
+  display: flex;
+}
+
+@media screen and (max-width: 740px) {
+  .header__menu {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+    margin-bottom: 27px;
+  }
+}

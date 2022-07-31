@@ -1,0 +1,8 @@
+.photo__like_counter {
+    color: #000;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+}

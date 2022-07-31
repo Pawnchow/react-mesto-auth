@@ -1,0 +1,14 @@
+.auth__input {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #FFF;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #CCCCCC;
+  padding: 8px 2px 11px;
+  background-color: #000;
+}
+.auth__input:first-of-type {
+  margin-bottom: 30px;
+}

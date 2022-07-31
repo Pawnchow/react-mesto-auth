@@ -1,0 +1,12 @@
+.photo__like {
+    background: url(../../../images/Like.svg) no-repeat center / cover;
+    width: 22px;
+    height: 19px;
+    border: none;
+    transition: .2s;
+}
+
+.photo__like:hover {
+    opacity: .6;
+    cursor: pointer;
+}

@@ -1,0 +1,12 @@
+.header__menu_email {
+  margin: 0 24px 0 0;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 740px) {
+ .header__menu_email {
+  margin-bottom: 16px;
+ } 
+}

@@ -1,0 +1,14 @@
+.header__menu_link {
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 22px;
+  cursor: pointer;
+  color: #A9A9A9;
+}
+
+@media screen and (max-width: 900px){
+  .header__menu_link {
+    margin-right: 10px;
+    margin-bottom: 40px;
+  }
+}

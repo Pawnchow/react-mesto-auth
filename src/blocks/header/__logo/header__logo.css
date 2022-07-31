@@ -1,0 +1,23 @@
+.header__logo {
+    background: url(../../../images/logo.svg) center / cover;
+    width: 142px;
+    height: 33px;
+    transition: 1s;
+}
+
+.header__logo:hover {
+    transform: perspective(100px) rotateY(360deg);
+}
+
+@media screen and (max-width: 1023px) {
+    .header__logo {
+      margin-left: 27px;
+    }
+  }
+
+@media screen and (max-width: 425px) {
+    .header__logo {
+        width: 104px;
+        height: 24px;
+    }
+}

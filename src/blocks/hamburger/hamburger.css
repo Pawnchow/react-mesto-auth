@@ -1,0 +1,19 @@
+.hamburger {
+  border: none;
+  display: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  align-self: flex-end;
+  right: 30px;
+  bottom: 40px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+}
+
+@media (max-width: 740px) {
+  .hamburger {
+    display: block;
+  }
+}
