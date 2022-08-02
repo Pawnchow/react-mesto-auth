@@ -1,19 +1,13 @@
-import { useState } from 'react';
-
+import useForm from '../hooks/useForm';
 function Login ({ onLogin }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const { values, handleChange } = useForm({});
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onLogin(password, email)
-  }
-  
-  function handleChange(evt) {
-    const name = evt.target.name;
-    const value = evt.target.value;
-    name === 'email' ? setEmail(value) : setPassword(value); 
+    if (!values.email || !values.password) {
+      return
+    }
+    onLogin(values)
   }
 
   return (
@@ -26,7 +20,7 @@ function Login ({ onLogin }) {
         placeholder='Email'
         className='auth__input'
         type='email'
-        value={email || ''}
+        value={values.email || ''}
         onChange={handleChange}
         required
       >
@@ -37,7 +31,7 @@ function Login ({ onLogin }) {
         placeholder='Пароль'
         className='auth__input'
         type='password'
-        value={password || ''}
+        value={values.password || ''}
         onChange={handleChange}
         required
       >

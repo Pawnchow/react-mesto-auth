@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, onOverlayClick }) {
+function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, onOverlayClick, isLoading }) {
   const avatarRef = useRef('')
 
   function handleSubmit(evt) {
@@ -23,6 +23,8 @@ function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, onOverlayClick }) {
       isOpen={isOpen}
       onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
+      buttonText={isLoading? 'Сохранение...' : 'Сохранить'}
       >
       <label className="popup__input-group">
         <input

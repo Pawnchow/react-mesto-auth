@@ -1,4 +1,4 @@
-function PopupWithForm( {buttonText="Сохранить", onClose, name, title, children, isOpen, onSubmit, onOverlayClick}) {
+function PopupWithForm( { buttonText, onClose, name, title, children, isOpen, onSubmit, onOverlayClick }) {
     return (
         <div className={`popup popup_${name} ${isOpen && 'popup_opened'}`} onMouseDown={onOverlayClick}>
             <div className="popup__container" onMouseDown={e => e.stopPropagation()}>

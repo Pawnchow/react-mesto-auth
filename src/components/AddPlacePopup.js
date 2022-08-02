@@ -1,30 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
+import useForm from "../hooks/useForm";
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onOverlayClick, onAddPlace }) {
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
+function AddPlacePopup({ isOpen, onClose, onOverlayClick, onAddPlace, isLoading }) {
 
+  const { values, handleChange, setValues } = useForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
+
     onAddPlace({
-      name: name,
-      link: link
+      name: values.name,
+      link: values.link
     });
   }
 
-  function handleLinkChange(evt) {
-    setLink(evt.target.value)
-  }
-
-  function handleNameChange(evt) {
-    setName(evt.target.value)
-  }
-
   useEffect(() => {
-    setLink('');
-    setName('');
-  }, [isOpen])
+    setValues({})
+  }, [isOpen, setValues])
 
   return (
     <PopupWithForm
@@ -32,22 +24,22 @@ function AddPlacePopup({ isOpen, onClose, onOverlayClick, onAddPlace }) {
       title="Новое место"
       onClose={onClose}
       isOpen={isOpen}
-      buttonText="Создать"
       onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
+      buttonText={isLoading? 'Сохранение...' : 'Создать'}
       >
       <label className="popup__input-group">
         <input
           id="cardName"
           className="popup__input"
           type="text"
-          name="cardName"
+          name="name"
           placeholder="Название"
           required
           minLength="1"
           maxLength="30"
-          onChange={handleNameChange}
-          value={name || ''}
+          onChange={handleChange}
+          value={values.name || ''}
         />
         <span
           id="cardName-error"
@@ -58,12 +50,12 @@ function AddPlacePopup({ isOpen, onClose, onOverlayClick, onAddPlace }) {
         <input
           id="cardLink"
           className="popup__input"
-          name="cardLink"
+          name="link"
           placeholder="Ссылка на картинку"
           required
           type="url"
-          onChange={handleLinkChange}
-          value={link || ''}
+          onChange={handleChange}
+          value={values.link || ''}
         />
         <span
           id="cardLink-error"

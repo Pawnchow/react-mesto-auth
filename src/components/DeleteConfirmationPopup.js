@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-function DeleteConfirmationPopup ({ isOpen, onClose, onOverlayClick, card, onCardDelete }) {
+function DeleteConfirmationPopup ({ isOpen, onClose, onOverlayClick, card, onCardDelete, isLoading }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onCardDelete(card)
@@ -13,7 +13,7 @@ function DeleteConfirmationPopup ({ isOpen, onClose, onOverlayClick, card, onCar
       isOpen={isOpen}
       onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
-      buttonText="Да"
+      buttonText={isLoading ? 'Сохранение...' : 'Да'}
     />
   )
 };

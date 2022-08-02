@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import api from '../utils/Api';
 import Header from './Header';
 import Main from './Main';
@@ -27,6 +27,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [deleteCardId, setDeleteCardId] = useState(null);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [isRegSucces, setIsRegSucces] = useState(false);
@@ -93,21 +94,25 @@ function App() {
     }
 
   function handleUpdateUser({ name, about }) {
+    setIsLoading(true)
     api.setUserInfo(name, about)
       .then(res => {
         setCurrentUser(res);
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsLoading(false))
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setIsLoading(true)
     api.setAvatar(avatar)
       .then(res => {
         setCurrentUser(res);
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsLoading(false))
   }
 
   function handleCardLike(card) {
@@ -120,24 +125,28 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    setIsLoading(true)
     api.deleteCard(card._id)
       .then(() => {
         setCards(prevCards => prevCards.filter(item => item !== card));
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsLoading(false))
   }
 
   function handleAddPlaceSubmit({ name, link }) {
+    setIsLoading(true)
     api.setCard(name, link)
       .then(newCard => {
         setCards(prevCards => [newCard, ...prevCards]);
         closeAllPopups();
       })
       .catch(err => console.log(err))
+      .finally(() => setIsLoading(false))
   }
 
-  function handleRegistration(password, email) {
+  function handleRegistration({password, email}) {
     auth.register(password, email)
       .then(() => {
         setIsRegSucces(true)
@@ -150,13 +159,13 @@ function App() {
       .finally(() => setIsInfoTooltipOpen(true))
   }
 
-  function handleLogin(password, email) {
+  function handleLogin({password, email}) {
     auth.authorize(password, email)
       .then(res => {
         setLoggedIn(true)
         setEmail(email)
         localStorage.setItem('token', res.token)
-        history.push('/')
+
       })
       .catch(err => {
         setIsRegSucces(false)
@@ -180,7 +189,6 @@ function App() {
           if(res) {
             setLoggedIn(true)
             setEmail(res.data.email)
-            history.push('/')
           }
         })
         .catch(err => console.log(err))
@@ -190,6 +198,10 @@ function App() {
   useEffect(() => {
     tokenCheck()
   }, [history])
+  
+  useEffect(() => {
+    loggedIn && history.push('/')
+  }, [loggedIn, history])
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -214,16 +226,13 @@ function App() {
           <Route path="/sign-up" >
             <Register onRegister={handleRegistration} />
           </Route>
-          <Route>
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-          </Route>
         </Switch>
         <Footer />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onOverlayClick={handleOverlayClick} /> 
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} onOverlayClick={handleOverlayClick}></AddPlacePopup>
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onOverlayClick={handleOverlayClick} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onOverlayClick={handleOverlayClick} isLoading={isLoading} /> 
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} onOverlayClick={handleOverlayClick} isLoading={isLoading} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onOverlayClick={handleOverlayClick} isLoading={isLoading} />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} onOverlayClick={handleOverlayClick} />
-        <DeleteConfirmationPopup isOpen={isDelConfirmPopupOpen} onClose={closeAllPopups} onOverlayClick={handleOverlayClick} onCardDelete={handleCardDelete} card={deleteCardId} />
+        <DeleteConfirmationPopup isOpen={isDelConfirmPopupOpen} onClose={closeAllPopups} onOverlayClick={handleOverlayClick} onCardDelete={handleCardDelete} card={deleteCardId} isLoading={isLoading} />
         <InfoToolTip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} isRegSucces={isRegSucces} onOverlayClick={handleOverlayClick} />
       </div>
     </CurrentUserContext.Provider>
