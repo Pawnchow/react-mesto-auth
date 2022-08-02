@@ -8,7 +8,7 @@ const getResponse = (res) => {
 }
 
 export const register = (password, email) => {
-  return fetch('https://auth.nomoreparties.co/signup', {
+  return fetch(`${baseUrl}/signup`, {
     method: 'POST',
     headers: {
       "Accept": "application/json",
@@ -20,7 +20,7 @@ export const register = (password, email) => {
 }
 
 export const authorize = (password, email) => {
-  return fetch('https://auth.nomoreparties.co/signin', {
+  return fetch(`${baseUrl}/signin`, {
     method: 'POST',
     headers: {
       "Accept": "application/json",
@@ -31,8 +31,8 @@ export const authorize = (password, email) => {
   .then(res => getResponse(res))
 }
 
-export const getContent = (token) => {
-  return fetch('https://auth.nomoreparties.co/users/me', {
+export const checkToken = (token) => {
+  return fetch(`${baseUrl}/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,3 +41,5 @@ export const getContent = (token) => {
 })
   .then(res => getResponse(res))
 }
+
+const baseUrl = 'https://auth.nomoreparties.co';

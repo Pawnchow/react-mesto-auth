@@ -9,7 +9,6 @@ function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar, onOverlayClick }) {
     onUpdateAvatar({
       avatar: avatarRef.current.value
     })
-    avatarRef.current.value='';
   }
 
   useEffect(() => {

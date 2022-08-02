@@ -68,6 +68,22 @@ function App() {
     setIsInfoTooltipOpen(false)
   };
 
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard || isInfoTooltipOpen;
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]) 
+
   function handleCardClick(card) {
     setSelectedCard(card);
   };
@@ -121,39 +137,6 @@ function App() {
       .catch(err => console.log(err))
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   function handleRegistration(password, email) {
     auth.register(password, email)
       .then(() => {
@@ -192,11 +175,12 @@ function App() {
   function tokenCheck() {
     const token = localStorage.getItem('token');
     if(token) {
-      auth.getContent(token)
+      auth.checkToken(token)
         .then(res => {
           if(res) {
             setLoggedIn(true)
             setEmail(res.data.email)
+            history.push('/')
           }
         })
         .catch(err => console.log(err))
@@ -207,7 +191,6 @@ function App() {
     tokenCheck()
   }, [history])
   
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">

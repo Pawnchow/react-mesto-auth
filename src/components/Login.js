@@ -19,7 +19,7 @@ function Login ({ onLogin }) {
   return (
     <div className='auth'>
     <h2 className='auth__title'>Вход</h2>
-    <form className='form auth__form' onSubmit={handleSubmit} noValidate>
+    <form className='form auth__form' onSubmit={handleSubmit}>
       <input
         id='email'
         name='email'
